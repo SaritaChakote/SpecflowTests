@@ -9,17 +9,17 @@ using static SpecflowPages.CommonMethods;
 namespace SpecflowTests
 {
     [Binding]
-    public class AddEducationAndCertificationsSteps 
+    public class AddEducationAndCertificationsSteps
     {
         [Given(@"I clicked on the Education tab on profile page")]
         public void GivenIClickedOnTheEducationTabOnProfilePage()
         {
             // Click on profile tab
-            Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[1]/div/a[2]")).Click();
+            Driver.driver.FindElement(By.XPath("//a[starts-with(text(),'Profile') and @class='item']")).Click();
             Thread.Sleep(3000);
 
             //Click on Education tab
-            Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[1]/a[3]")).Click();
+            Driver.driver.FindElement(By.XPath("//a[@class='item' and text()='Education']")).Click();
 
         }
 
@@ -27,23 +27,25 @@ namespace SpecflowTests
         public void GivenIClickedOnTheCertificationTabOnProfilePage()
         {
             //Click on Certification
-            Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[1]/a[4]")).Click();
+            Driver.driver.FindElement(By.XPath("//a[@class='item' and text()='Certifications']")).Click();
 
         }
 
         [When(@"I add a new Education")]
         public void WhenIAddANewEducation()
         {
-            Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/table/thead/tr/th[6]/div")).Click();
+            Driver.driver.FindElement(By.XPath("//thead//tr[1]//th[6]//div[@class='ui teal button ']")).Click();
             // fill the add new form for education
-            Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/div/div[1]/div[1]/input")).SendKeys("Monash University");
-            IWebElement Country = Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/div/div[1]/div[2]/select"));
-            Country.Click();
-            IWebElement Title = Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/div/div[2]/div[1]/select/option[7]"));
-            Title.Click();
-            Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/div/div[2]/div[2]/input")).SendKeys("Engineer");
-            Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/div/div[2]/div[3]/select/option[11]")).Click();
-            Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/div/div[3]/div/input[1]")).Click();
+            Driver.driver.FindElement(By.XPath("//input[@name='instituteName']")).SendKeys("Monash University");
+            
+            //Click on Country
+            Driver.driver.FindElement(By.XPath("//select[@name='country']")).SendKeys("I");
+
+            Driver.driver.FindElement(By.XPath("//select[@name='title']")).SendKeys("B.Tech");
+           
+            Driver.driver.FindElement(By.XPath("//input[@name='degree']")).SendKeys("Engineer");
+            Driver.driver.FindElement(By.XPath("//select[@name='yearOfGraduation']")).SendKeys("2010");
+            Driver.driver.FindElement(By.XPath("//input[@value='Add' and @type='button']")).Click();
 
         }
 
@@ -51,11 +53,12 @@ namespace SpecflowTests
         public void WhenIAddANewCertification()
         {
             //add new button
-            Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[5]/div[1]/div[2]/div/table/thead/tr/th[4]/div")).Click();
-            Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[5]/div[1]/div[2]/div/div/div[1]/div/input")).SendKeys("ISTQB");
-            Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[5]/div[1]/div[2]/div/div/div[2]/div[1]/input")).SendKeys("Testing");
-            Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[5]/div[1]/div[2]/div/div/div[2]/div[2]/select/option[9]")).Click();
-            Driver.driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[5]/div[1]/div[2]/div/div/div[3]/input[1]")).Click();
+            Driver.driver.FindElement(By.XPath("//thead//tr[1]//th[4]//div[@class='ui teal button ']")).Click();
+            Driver.driver.FindElement(By.XPath("//input[@name='certificationName']")).SendKeys("ISTQB");
+            Driver.driver.FindElement(By.XPath("//input[@name='certificationFrom']")).SendKeys("Testing");
+            Driver.driver.FindElement(By.XPath("//select[@name='certificationYear']")).SendKeys("2010");
+            Driver.driver.FindElement(By.XPath("//input[@value='Add' and @type='button']")).Click();
+
         }
 
         [Then(@"It should be displayed under Education on my profile")]
@@ -87,16 +90,10 @@ namespace SpecflowTests
                 CommonMethods.test.Log(LogStatus.Fail, "Test Failed", e.Message);
             }
         }
-
-
-
-
-
-
+        
         [Then(@"It should be displayed under Certification on my profile")]
         public void ThenItShouldBeDisplayedUnderCertificationOnMyProfile()
         {
-
             try
             {
                 //Start the Reports
@@ -124,9 +121,7 @@ namespace SpecflowTests
             }
         }
     }
+
+   
 }
-
-    
-
-    
 
